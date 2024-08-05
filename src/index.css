@@ -1,9 +1,33 @@
-@tailwind base;
-@tailwind components;
-
-.custom-box-shadow {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --button-bg-color: #f0f0f0;
+    --button-text-color: #000000;
 }
 
-@tailwind utilities;
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --button-bg-color: #333333;
+    --button-text-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button.active {
+    border: 2px solid var(--text-color);
+}

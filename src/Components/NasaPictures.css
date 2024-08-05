@@ -1,0 +1,61 @@
+.camera-buttons {
+    margin: 20px 0;
+  }
+  
+  .camera-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2px solid #444;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1rem;
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .camera-buttons button:hover {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .camera-buttons .active {
+    background-color: #1e90ff; /* Active state color */
+    color: #fff;
+    border-color: #1e90ff; /* Match border color with background */
+  }
+  
+  .photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex: 1; /* Takes up remaining space */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .photo-card {
+    width: calc(33.333% - 40px);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .photo-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .photo-card {
+      width: calc(50% - 40px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .photo-card {
+      width: calc(100% - 40px);
+    }
+  }
+  

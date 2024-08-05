@@ -1,43 +1,57 @@
-// src/components/NasaPictures.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './NasaPictures.css';
 
-function NasaPictures() {
-    const [photos, setPhotos] = useState([]);
+const NasaPictures = () => {
+  const [photos, setPhotos] = useState([]);
+  const [camera, setCamera] = useState('FHAZ');
 
-    useEffect(() => {
-        const fetchPhotos = async () => {
-            try {
-                const response = await axios.get('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos', {
-                    params: {
-                        sol: 1000,
-                        
-                        api_key: 'DEMO_KEY'
-                    }
-                });
-                setPhotos(response.data.photos);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+  const cameras = [
+    { name: 'FHAZ', full_name: 'Front Hazard Avoidance Camera' },
+    { name: 'NAVCAM', full_name: 'Navigation Camera' },
+    { name: 'MAST', full_name: 'Mast Camera' },
+    { name: 'CHEMCAM', full_name: 'Chemistry and Camera Complex' },
+    { name: 'MAHLI', full_name: 'Mars Hand Lens Imager' },
+    { name: 'MARDI', full_name: 'Mars Descent Imager' },
+    { name: 'RHAZ', full_name: 'Rear Hazard Avoidance Camera' }
+  ];
 
-        fetchPhotos();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=${camera}&api_key=DEMO_KEY`);
+        setPhotos(response.data.photos);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    return (
-        <div>
-            <h1 className="text-center my-6 mt-10 sm:my-14 text-3xl md:text-5xl">NASA Mars Photos</h1>
-            <div className="grid gap-4 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-                {photos.map((photo) => (
-                    <div key={photo.id} className="rounded-3xl">
-                        <img src={photo.img_src} alt={photo.camera.full_name} className="rounded-3xl" />
-                        <p>{photo.camera.full_name}</p>
-                        <p>{photo.earth_date}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
+    fetchData();
+  }, [camera]);
+
+  return (
+    <div className="nasa-pictures">
+      <div className="camera-buttons">
+        {cameras.map((cam) => (
+          <button 
+            key={cam.name} 
+            className={camera === cam.name ? 'active' : ''} 
+            onClick={() => setCamera(cam.name)}
+          >
+            {cam.full_name}
+          </button>
+        ))}
+      </div>
+      <div className="photos">
+        {photos.map((photo) => (
+          <div key={photo.id} className="photo-card">
+            <img src={photo.img_src} alt={`Mars Rover - ${photo.camera.full_name}`} />
+            <p>{photo.earth_date}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default NasaPictures;
